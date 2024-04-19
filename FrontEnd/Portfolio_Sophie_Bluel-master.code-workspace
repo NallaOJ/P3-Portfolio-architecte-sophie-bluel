@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../../../../Downloads/Portfolio_Sophie_Bluel-master"
+		},
+		{
+			"path": "../../../PROJET3.B2"
+		},
+		{
+			"path": "../.."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "projet3"
+	}
+}
