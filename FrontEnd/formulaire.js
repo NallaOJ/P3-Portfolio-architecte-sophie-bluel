@@ -1,30 +1,20 @@
-
-//créaton du modal 
 const modalFormulaire = document.createElement("div")
 modalFormulaire.classList.add("modal")
 
-//création de la box contenant le header, h3, photos et texte ajout photo 
 const modalFormulaireBox = document.createElement("div")
 modalFormulaireBox.classList.add("modal-box")
 
-//création du header à l'intérieur de la box
 const modalFormulaireHeader = document.createElement("div")
 modalFormulaireHeader.classList.add("modal-header")
 const crossFormulaire = document.createElement("i")
 crossFormulaire.classList.add("fa-solid", "fa-xmark", "fa-xl", "clickable")
 const retour = document.createElement("i")
 retour.classList.add("fa-solid", "fa-arrow-left", "fa-xl", "clickable")
-
 modalFormulaireHeader.appendChild(crossFormulaire)
 modalFormulaireHeader.appendChild(retour)
-modalFormulaireHeader.insertBefore(retour, crossFormulaire)
-
-
-
 
 const modalFormulaireTitre = document.createElement("h3")
 modalFormulaireTitre.innerText = "Ajout photo"
-
 
 const form = document.createElement("form")
 
@@ -33,7 +23,6 @@ photoUpload.setAttribute("type", "file")
 photoUpload.setAttribute("accept", "image/jpeg")
 photoUpload.setAttribute("accept", "image/png")
 photoUpload.style.display = "none"
-
 
 const divPhoto = document.createElement("div")
 divPhoto.classList.add("div-photo", "clickable")
@@ -47,7 +36,6 @@ divPhoto.appendChild(photoIcon)
 divPhoto.appendChild(photoButton)
 divPhoto.appendChild(photoInfo)
 
-
 const labelTitre = document.createElement("label")
 labelTitre.setAttribute("for", "titre")
 labelTitre.innerText = "Titre"
@@ -55,6 +43,7 @@ const titre = document.createElement("input")
 titre.setAttribute("type", "text")
 titre.setAttribute("name", "titre")
 titre.setAttribute("id", "titre")
+
 
 
 const labelCat = document.createElement("label")
@@ -80,7 +69,6 @@ fetch("http://localhost:5678/api/categories").then(res => {
     })
 })
 
-
 form.appendChild(divPhoto)
 form.appendChild(photoUpload)
 form.appendChild(labelTitre)
@@ -88,16 +76,13 @@ form.appendChild(titre)
 form.appendChild(labelCat)
 form.appendChild(cat)
 
-
-const divFormulaireLine = document.createElement("div")
+const divFormulaireLine = document.createElement("hr")
 divFormulaireLine.classList.add("line")
-
 
 const boutonValider = document.createElement("a")
 boutonValider.innerText = "Valider"
 boutonValider.setAttribute("disabled", "disabled")
 boutonValider.classList.add("modal-button", "disabled")
-
 
 modalFormulaireBox.appendChild(modalFormulaireHeader)
 modalFormulaireBox.appendChild(modalFormulaireTitre)
@@ -106,18 +91,14 @@ modalFormulaireBox.appendChild(divFormulaireLine)
 modalFormulaireBox.appendChild(boutonValider)
 modalFormulaire.appendChild(modalFormulaireBox)
 
-
 body.insertBefore(modalFormulaire, modal)
-
 
 divPhoto.addEventListener("click", () => {
     photoUpload.click()
 })
 
-
 const preview = document.createElement("img")
 
-//changement d'image dans la section 'ajout de photo'
 photoUpload.addEventListener("change", () => {
     let source = ""
     source = window.URL.createObjectURL(photoUpload.files[0])
@@ -127,17 +108,13 @@ photoUpload.addEventListener("change", () => {
     photoIcon.style.display = "none"
     photoButton.style.display = "none"
     photoInfo.style.display = "none"
-
-    preview.style.maxWidth = "100%";
-    preview.style.maxHeight = "100%";
-
     divPhoto.appendChild(preview)
 })
 
 
-//open modal Ajout de photo
 boutonAjouter.addEventListener("click", () => {
-    modalFormulaire.style.display = "block"
+    modalFormulaire.style.display = "block";
+    overlay.style.display = "block";
     modal.style.display = "none"
 })
 
@@ -148,18 +125,20 @@ modalFormulaire.addEventListener("click", (event) => {
     }
 })
 
-
 crossFormulaire.addEventListener("click", () => {
     modalFormulaire.style.display = "none"
+    overlay.style.display = "none";
 })
-
 
 retour.addEventListener("click", () => {
     modalFormulaire.style.display = "none"
     modal.style.display = "block"
 })
 
-
+overlay.addEventListener("click", () => {
+    modalFormulaire.style.display = "none";
+    overlay.style.display = "none";
+});
 
 
 form.addEventListener("change", () => {
@@ -176,7 +155,6 @@ form.addEventListener("change", () => {
         boutonValider.setAttribute("disabled", "disabled")
     }
 })
-
 
 boutonValider.addEventListener("click", () => {
     const token = localStorage.getItem("token")
@@ -201,13 +179,16 @@ boutonValider.addEventListener("click", () => {
                     const img = document.createElement("img")
                     img.src = window.URL.createObjectURL(photoUpload.files[0])
                     
+               
                     const iconPoubelle = document.createElement("i")
-                    iconPoubelle.classList.add("fa-solid", "fa fa-trash", "clickable")
+                    iconPoubelle.classList.add("fa-solid", "fa-trash-can", "clickable")
 
+                    
                     divImage.appendChild(img)
-                    divGalleryMod.appendChild(divImage)
                     divImage.appendChild(iconPoubelle)
-
+                    divGalleryMod.appendChild(divImage)
+                    
+                    
                     
 
                     const figure = document.createElement("figure")
@@ -223,20 +204,6 @@ boutonValider.addEventListener("click", () => {
 
                     modalFormulaire.style.display = "none"
                     modal.style.display = "block"
-                } else {
-                    // La requête a échoué, afficher un message d'erreur par exemple
-                    throw new Error("Erreur lors de l'envoi du formulaire.");
                 }
             })
-            .catch(error => {
-                // Gestion des erreurs survenues lors de l'envoi de la requête
-                console.error("Erreur :", error);
-                // Afficher un message d'erreur à l'utilisateur, par exemple
-            });
-        });
-
-
-
-/*fetch(`http://localhost:5678/api/works/${event.target.dataset.id}`, {
-	method: "DELETE",
-	headers: { "Authorization" : `Bearer ${token}` }})*/
+})
