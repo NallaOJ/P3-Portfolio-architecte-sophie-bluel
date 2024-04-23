@@ -1,6 +1,6 @@
 let list
 
-//récupération du projet
+
 async function fetchWorks() {
     const getProjet = await fetch("http://localhost:5678/api/works")
     list = await getProjet.json()
@@ -9,13 +9,11 @@ async function fetchWorks() {
 } ;
 
 
-//apel à la fonction fetWorks et ensuite afficherElements
 fetchWorks().then(list => {
      afficherElements(list)
  });
 
 
-//fonction créer pour afficher les éléments récupérer à l'intérieur du projet
 function afficherElements(list) {
      for(let i = 0; i < list.length; i++) {
          const projet = list[i]
