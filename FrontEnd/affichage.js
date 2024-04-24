@@ -92,6 +92,7 @@ const filtersElements = document.querySelectorAll(".filters a")
         divTitre.insertBefore(iconModifier, boutonModifier)
 
         sectionPortfolio.insertBefore(divTitre, divGallery)
+
     }
 
 

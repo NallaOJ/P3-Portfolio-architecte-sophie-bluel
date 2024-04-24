@@ -337,7 +337,7 @@ footer nav ul {
 		flex-direction: column;
 		justify-content: space-between;
 	align-items: center;
-	gap: 38px;
+	gap: 35px;
 	}
 
 	#titre,
@@ -347,7 +347,9 @@ footer nav ul {
 		margin-top: -27px;
 	}
   
-
+.modal-box p {
+	margin-bottom: 0;
+}
 
 .modal-header {
 	padding-left: 630px;
@@ -359,6 +361,7 @@ margin-top: 15px;
 	align-items: center;
 	font-size: 26px;
 }
+
 
 .gallery-mod {
 	display:flex;
@@ -472,7 +475,7 @@ justify-content: flex-end;
   }
   
   h3{
-padding-top: 50px;
+padding-top: 30px;
 font-weight: 400;
 line-height: 30.5px;
   }

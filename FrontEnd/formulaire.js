@@ -16,6 +16,7 @@ modalFormulaireHeader.appendChild(retour)
 const modalFormulaireTitre = document.createElement("h3")
 modalFormulaireTitre.innerText = "Ajout photo"
 
+
 const form = document.createElement("form")
 
 const photoUpload = document.createElement("input")
@@ -52,6 +53,8 @@ labelCat.innerText = "Catégorie"
 const cat = document.createElement("select")
 cat.setAttribute("name", "categorie")
 cat.setAttribute("id", "categorie")
+
+
 
 
 const optionVide = document.createElement("option")
@@ -159,6 +162,7 @@ form.addEventListener("change", () => {
 boutonValider.addEventListener("click", () => {
     const token = localStorage.getItem("token")
    
+
     let data = new FormData()
     data.append("image", photoUpload.files[0])
     data.append("title", titre.value)
@@ -166,10 +170,24 @@ boutonValider.addEventListener("click", () => {
     
     console.log(data)
 
+    function afficherMessageErreur(message) {
+    const modalErreur = document.createElement("p")
+    modalErreur.classList.add("modal-erreur")
+    modalErreur.innerText = message
+    modalFormulaireBox.insertBefore(modalErreur, form)
+    }
+
     fetch("http://localhost:5678/api/works", {
                 method: "POST",
-                headers: { "Authorization" : `Bearer ${token}` },
+                headers: { 
+                    Accept: "application/JSON",
+                    Authorization: `Bearer ${token}` },
                 body: data,
+            })
+            .then(res => {
+                if(res.status === 500) {
+                    throw new Error("Les champs doivent être remplis.")
+                    }
             })
             .then(res => {
                 if(res.status === 201) {
@@ -205,5 +223,8 @@ boutonValider.addEventListener("click", () => {
                     modalFormulaire.style.display = "none"
                     modal.style.display = "block"
                 }
-            })
+            }) 
+            .catch(error => {
+                afficherMessageErreur(error.message)
+            })    
 })
