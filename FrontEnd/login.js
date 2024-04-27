@@ -1,6 +1,12 @@
 const formLogin = document.querySelector("#login form")
 const sectionLogin = document.querySelector("#login")
 
+const divErreur = document.createElement("div")
+    divErreur.classList.add("erreur")
+    const messageErreurElement = document.createElement("p")
+    divErreur.appendChild(messageErreurElement)
+    sectionLogin.insertBefore(divErreur, formLogin)
+
 
 formLogin.addEventListener("submit", async (event) => {
     event.preventDefault() 
@@ -32,15 +38,8 @@ formLogin.addEventListener("submit", async (event) => {
     })
 })
 
-
 function afficherMessageErreur(message) {
-    const divErreur = document.createElement("div")
-    divErreur.classList.add("erreur")
-    const messageErreurElement = document.createElement("p")
-    messageErreurElement.innerText = message
-
-    divErreur.appendChild(messageErreurElement)
-    sectionLogin.insertBefore(divErreur, formLogin)
+    messageErreurElement.innerText = message;
 }
 
 

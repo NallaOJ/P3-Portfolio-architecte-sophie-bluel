@@ -114,7 +114,7 @@ photoUpload.addEventListener("change", () => {
     divPhoto.appendChild(preview)
 })
 
-
+//ouverture du formulaire modale au click du bouton Ajouter//
 boutonAjouter.addEventListener("click", () => {
     modalFormulaire.style.display = "block";
     overlay.style.display = "block";
@@ -159,9 +159,23 @@ form.addEventListener("change", () => {
     }
 })
 
+
+    const modalErreur = document.createElement("p")
+    modalErreur.classList.add("modal-erreur")
+    modalFormulaireBox.appendChild(modalErreur);
+    modalFormulaireBox.insertBefore(modalErreur, form)
+    
+
+
+
 boutonValider.addEventListener("click", () => {
+
     const token = localStorage.getItem("token")
    
+    if (photoUpload.files.length === 0 || titre.value.trim() === "" || cat.value === "") {
+        afficherMessageErreur("Les champs doivent être remplis.");
+        return; 
+    }
 
     let data = new FormData()
     data.append("image", photoUpload.files[0])
@@ -169,13 +183,8 @@ boutonValider.addEventListener("click", () => {
     data.append("category", parseInt(cat.selectedOptions[0].getAttribute("data-id")))
     
     console.log(data)
-
-    function afficherMessageErreur(message) {
-    const modalErreur = document.createElement("p")
-    modalErreur.classList.add("modal-erreur")
-    modalErreur.innerText = message
-    modalFormulaireBox.insertBefore(modalErreur, form)
-    }
+    
+   
 
     fetch("http://localhost:5678/api/works", {
                 method: "POST",
@@ -183,11 +192,6 @@ boutonValider.addEventListener("click", () => {
                     Accept: "application/JSON",
                     Authorization: `Bearer ${token}` },
                 body: data,
-            })
-            .then(res => {
-                if(res.status === 500) {
-                    throw new Error("Les champs doivent être remplis.")
-                    }
             })
             .then(res => {
                 if(res.status === 201) {
@@ -207,8 +211,6 @@ boutonValider.addEventListener("click", () => {
                     divGalleryMod.appendChild(divImage)
                     
                     
-                    
-
                     const figure = document.createElement("figure")
                     const imgGallery = document.createElement("img")
                     imgGallery.src = window.URL.createObjectURL(photoUpload.files[0])
@@ -228,3 +230,8 @@ boutonValider.addEventListener("click", () => {
                 afficherMessageErreur(error.message)
             })    
 })
+
+function afficherMessageErreur(message) {
+    modalErreur.innerText = message;
+}
+
