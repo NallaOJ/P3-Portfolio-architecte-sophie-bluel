@@ -75,7 +75,8 @@ overlay.addEventListener("click", (event) => {
 });
 
 const boutonModifier = document.querySelector(".modifier")
-boutonModifier.addEventListener("click", () =>{
+
+boutonModifier && boutonModifier.addEventListener("click", () =>{
     modal.style.display = "block"
     overlay.style.display = "block";
 

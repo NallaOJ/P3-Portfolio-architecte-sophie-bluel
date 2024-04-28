@@ -114,13 +114,11 @@ photoUpload.addEventListener("change", () => {
     divPhoto.appendChild(preview)
 })
 
-//ouverture du formulaire modale au click du bouton Ajouter//
 boutonAjouter.addEventListener("click", () => {
     modalFormulaire.style.display = "block";
     overlay.style.display = "block";
     modal.style.display = "none"
 })
-
 
 modalFormulaire.addEventListener("click", (event) => {
     if(event.target === modalFormulaire) {
@@ -129,20 +127,80 @@ modalFormulaire.addEventListener("click", (event) => {
 })
 
 crossFormulaire.addEventListener("click", () => {
-    modalFormulaire.style.display = "none"
+    modalFormulaire.style.display = "none";
     overlay.style.display = "none";
-})
+    modalErreur.innerText = "";
+    titre.value = "";
+    cat.selectedIndex = 0;
+    photoUpload.value = ""; 
+    if (divPhoto.contains(preview)) {
+        divPhoto.removeChild(preview);
+    }
+    
+    divPhoto.innerHTML = ""; 
+    
+    const photoIcon = document.createElement("i");
+    photoIcon.classList.add("fa-regular", "fa-image", "fa-6x");
+    const photoButton = document.createElement("a");
+    photoButton.innerText = "+ Ajouter photo";
+    const photoInfo = document.createElement("p");
+    photoInfo.innerText = "jpg, png : 4mo max";
+    
+    divPhoto.appendChild(photoIcon);
+    divPhoto.appendChild(photoButton);
+    divPhoto.appendChild(photoInfo);
+});
 
 retour.addEventListener("click", () => {
-    modalFormulaire.style.display = "none"
-    modal.style.display = "block"
-})
+    modalFormulaire.style.display = "none";
+    modal.style.display = "block";
+    overlay.style.display = "block";
+    modalErreur.innerText = "";
+    titre.value = "";
+    cat.selectedIndex = 0;
+    photoUpload.value = ""; 
+    if (divPhoto.contains(preview)) {
+        divPhoto.removeChild(preview);
+    }
+
+    divPhoto.innerHTML = "";
+ 
+    const photoIcon = document.createElement("i");
+    photoIcon.classList.add("fa-regular", "fa-image", "fa-6x");
+    const photoButton = document.createElement("a");
+    photoButton.innerText = "+ Ajouter photo";
+    const photoInfo = document.createElement("p");
+    photoInfo.innerText = "jpg, png : 4mo max";
+    
+    divPhoto.appendChild(photoIcon);
+    divPhoto.appendChild(photoButton);
+    divPhoto.appendChild(photoInfo);
+});
 
 overlay.addEventListener("click", () => {
     modalFormulaire.style.display = "none";
     overlay.style.display = "none";
+    modalErreur.innerText = "";
+    titre.value = "";
+    cat.selectedIndex = 0;
+    photoUpload.value = ""; 
+    if (divPhoto.contains(preview)) {
+        divPhoto.removeChild(preview);
+    }
+    
+    divPhoto.innerHTML = "";
+    
+    const photoIcon = document.createElement("i");
+    photoIcon.classList.add("fa-regular", "fa-image", "fa-6x");
+    const photoButton = document.createElement("a");
+    photoButton.innerText = "+ Ajouter photo";
+    const photoInfo = document.createElement("p");
+    photoInfo.innerText = "jpg, png : 4mo max";
+    
+    divPhoto.appendChild(photoIcon);
+    divPhoto.appendChild(photoButton);
+    divPhoto.appendChild(photoInfo);
 });
-
 
 form.addEventListener("change", () => {
     const photoValue = window.URL.createObjectURL(photoUpload.files[0])
@@ -166,8 +224,6 @@ form.addEventListener("change", () => {
     modalFormulaireBox.insertBefore(modalErreur, form)
     
 
-
-
 boutonValider.addEventListener("click", () => {
 
     const token = localStorage.getItem("token")
@@ -184,7 +240,6 @@ boutonValider.addEventListener("click", () => {
     
     console.log(data)
     
-   
 
     fetch("http://localhost:5678/api/works", {
                 method: "POST",
